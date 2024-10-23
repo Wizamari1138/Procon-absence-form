@@ -28,7 +28,7 @@ function App() {
 
     try {
       // APIにデータを送信
-      const response = await fetch('https://example.com/absence', {
+      const response = await fetch('https://procon-absence-form-server.vercel.app/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
