@@ -4,9 +4,12 @@
 import { useState } from "react";
 
 export default function Home() {
-  const [name, setName] = useState("");
-  const [reason, setReason] = useState("");
-  const [date, setDate] = useState("");
+  const [name, setName] = useState<string>("");
+  const [reason, setReason] = useState<string>("");
+  const today = new Date();
+  const formattedTodayDate = today.toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit",
+    day: "2-digit"}).replaceAll('/', '-')
+  const [date, setDate] = useState<string>(formattedTodayDate);
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
