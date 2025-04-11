@@ -1,30 +1,27 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   const { name, reason, date } = await req.json();
 
-  // Gmail の設定
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_PASS,
-    },
-  });
-
-  const mailOptions = {
-    from: process.env.GMAIL_USER,
-    to: process.env.OWNER_EMAIL, // 受信者（オーナーのメール）
-    subject: "【欠席連絡】" + name,
-    text: `名前: ${name}\n欠席日: ${date}\n理由: ${reason}`,
-  };
-
   try {
-    await transporter.sendMail(mailOptions);
-    return NextResponse.json({ message: "メール送信成功" }, { status: 200 });
-  } catch (error) {
-    console.error("メール送信失敗", error);
-    return NextResponse.json({ message: "メール送信失敗" }, { status: 500 });
+    const { error } = await resend.emails.send({
+      from: "欠席連絡フォーム <onboarding@resend.dev>", // sandbox用送信元
+      to: [process.env.OWNER_EMAIL ?? ""],
+      subject: "【欠席連絡】",
+      text: `名前: ${name}\n理由: ${reason}\n日付: ${date}`,
+    });
+
+    if (error) {
+      console.error("Resend error:", error);
+      return NextResponse.json({ error: "送信に失敗しました" }, { status: 500 });
+    }
+
+    return NextResponse.json({ message: "送信しました！" }, { status: 200 });
+  } catch (e) {
+    console.error("送信エラー:", e);
+    return NextResponse.json({ error: "送信エラーが発生しました" }, { status: 500 });
   }
 }
