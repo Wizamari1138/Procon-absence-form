@@ -2,9 +2,12 @@
 import { useState } from "react";
 
 export default function AbsenceForm() {
-  const [name, setName] = useState("");
-  const [reason, setReason] = useState("");
-  const [date, setDate] = useState("");
+  const [name, setName] = useState<string>("");
+  const [reason, setReason] = useState<string>("");
+  const today = new Date();
+  const formattedTodayDate = new Date().toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit",
+    day: "2-digit"}).replaceAll('/', '-')
+  const [date, setDate] = useState<string>(formattedTodayDate);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
