@@ -5,7 +5,7 @@ export default function AbsenceForm() {
   const [name, setName] = useState<string>("");
   const [reason, setReason] = useState<string>("");
   const today = new Date();
-  const formattedTodayDate = new Date().toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit",
+  const formattedTodayDate = today.toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit",
     day: "2-digit"}).replaceAll('/', '-')
   const [date, setDate] = useState<string>(formattedTodayDate);
 
