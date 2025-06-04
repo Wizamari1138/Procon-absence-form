@@ -32,14 +32,14 @@ export default function Home() {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full p-2 border rounded mt-1 text-white bg-gray-800 border-white placeholder-white/70"
+          className="w-full p-2 border rounded mt-1 text-gray-800 bg-white border-white placeholder-gray-600"
           placeholder="名前を入力"
           required
         />
         <textarea
           value={reason}
           onChange={(e) => setReason(e.target.value)}
-          className="w-full p-2 border rounded mt-1 text-white bg-gray-800 border-white placeholder-white/70"
+          className="w-full p-2 border rounded mt-1 text-gray-800 bg-white border-white placeholder-gray-600"
           placeholder="理由を入力"
           required
         />
@@ -47,7 +47,7 @@ export default function Home() {
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="w-full p-2 border rounded mt-1 text-white bg-gray-800 border-white"
+          className="w-full p-2 border rounded mt-1 text-gray-800 bg-white border-white"
           required
         />
         <button
