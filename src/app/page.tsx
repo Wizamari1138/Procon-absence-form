@@ -10,13 +10,14 @@ export default function Home() {
   const formattedTodayDate = today.toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit",
     day: "2-digit"}).replaceAll('/', '-')
   const [date, setDate] = useState<string>(formattedTodayDate);
+  const [grade, setGrade] = useState<string>("1");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const res = await fetch("/api/sendMail", {
       method: "POST",
-      body: JSON.stringify({ name, reason, date }),
+      body: JSON.stringify({ name, reason, date, grade }),
       headers: { "Content-Type": "application/json" },
     });
 
@@ -36,6 +37,18 @@ export default function Home() {
           placeholder="名前を入力"
           required
         />
+        <select
+          value={grade}
+          onChange={(e) => setGrade(e.target.value)}
+          className="w-full p-2 border rounded mt-1 text-gray-800 bg-white border-white"
+          required
+        >
+          <option value="1">1年</option>
+          <option value="2">2年</option>
+          <option value="3">3年</option>
+          <option value="4">4年</option>
+          <option value="5">5年</option>
+        </select>
         <textarea
           value={reason}
           onChange={(e) => setReason(e.target.value)}

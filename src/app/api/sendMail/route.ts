@@ -4,14 +4,14 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
-  const { name, reason, date } = await req.json();
+  const { name, reason, date, grade } = await req.json();
 
   try {
     const { error } = await resend.emails.send({
       from: "欠席連絡フォーム <onboarding@resend.dev>", // sandbox用送信元
       to: [process.env.OWNER_EMAIL ?? ""],
       subject: "【欠席連絡】",
-      text: `名前: ${name}\n理由: ${reason}\n日付: ${date}`,
+      text: `学年: ${grade}\n名前: ${name}\n理由: ${reason}\n日付: ${date}`,
     });
 
     if (error) {
